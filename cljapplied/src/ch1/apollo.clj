@@ -41,3 +41,12 @@
                             #inst "1967-11-09T12:00:01-00:00"
                             false
                             :orbits 3))
+
+(defn euclidean-norm [ecc-vector])
+
+(defrecord Planet [name moons volume mass aphelion perihelion orbital-eccentricity])
+
+(defn make-planet
+  "Make a planet from field values and an eccentricity vector"
+  [name moons volume mass aphelion perihelion ecc-vector]
+  (->Planet name moons volume mass aphelion perihelion (euclidean-norm ecc-vector)))

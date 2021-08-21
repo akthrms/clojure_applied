@@ -16,3 +16,15 @@
   (->> planets
        (sort-by :volume)
        (take n)))
+
+(defn index-planets
+  [planets]
+  (group-by #(first (:name %)) planets))
+
+(defn has-moons?
+  [planet]
+  (pos? (:moons planet)))
+
+(defn split-moons
+  [planets]
+  (group-by has-moons? planets))

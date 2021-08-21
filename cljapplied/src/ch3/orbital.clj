@@ -1,4 +1,5 @@
-(ns ch3.orbital)
+(ns ch3.orbital
+  (:import [ch1.modeling Planet]))
 
 (defn semi-major-axis
   "The planet's average distance from the star"
@@ -41,3 +42,39 @@
 (defn orbital-periods
   [planets star]
   (into () (orbital-period-transformation star) planets))
+
+(defn total-moons
+  [planets]
+  (reduce + 0 (map :moons planets)))
+
+(defn total-moons
+  [planets]
+  (transduce (map :moons) + 0 planets))
+
+(defn find-planet
+  [planets pname]
+  (reduce (fn [_ planet]
+            (when (= pname (:name planet))
+              (reduced planet)))
+          planets))
+
+(defn planet?
+  [entity]
+  (instance? Planet entity))
+
+(defn total-moons
+  [entities]
+  (reduce + 0 (map :moons (filter planet? entities))))
+
+(defn total-moons
+  [entities]
+  (->> entities
+       (filter planet?)
+       (map :moons)
+       (reduce + 0)))
+
+(def moons-transformation (comp (map :moons) (filter planet?)))
+
+(defn total-moons
+  [entities]
+  (transduce moons-transformation + 0 entities))
